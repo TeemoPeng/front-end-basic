@@ -4,12 +4,14 @@
 遵守ES6的语法规则。
 
 ES5中没有块级作用域：
+
 	for(var i = 0; i < 10; i++){
 	  console.log(i);
 	}
 	console.log(i); 	//在for循环代码块之外能访问到i
 
 ES6中增加了块级作用域：
+
 	for(let x = 0; x < 10; x++){
 	  console.log(x);
 	}
