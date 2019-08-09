@@ -28,17 +28,17 @@ ES6中增加了块级作用域：
 这个变量是在fn1这个函数作用域中定义的，只能在其中访问的到。
 
 ##### 作用域链
-、、、
+
 	function Fn1(){
 	  var a = 100;
 	  return function (){
 	    console.log(a);
 	  }
 	}
+
 	var f1 = new Fn1();
 	var a = 200;
 	f1();
-、、、
 
 当调用f1()这个方法时，会执行console.log(a),然后程序会在当前作用域中查找是否存在a这个变量，当前作用域，
 即 return function (){console.log(a);}这个函数作用域，但是并没有找到a这个变量，然后会去这个作用域的
