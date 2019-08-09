@@ -13,12 +13,12 @@
 	当我们访问某个对象的属性时，如果这个对象本身没有这个属性，则会去它的__proto__（构造函数的prototype）中去查找
 
 	function Person(name,age){
-		this.name = name;
-		this.age = age;		
+	  this.name = name;
+	  this.age = age;		
 	}
 
 	Person.prototype.speak = function(){
-		console.log('I am ' + this.name)
+	  console.log('I am ' + this.name)
 	}
 
 	var p = new Person('zhangsan',22); 
