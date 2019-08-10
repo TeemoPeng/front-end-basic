@@ -24,5 +24,4 @@
 	var p = new Person('zhangsan',22); 
 	p.speak();
 
-	我们创建的p这个对象，它本身是没有speak这个方法的，但是当我们调用p.speak()的时候，程序会先去它本身（也就是Person这个
-	构造函数）中去查找有没有speak这个方法，这个时候是找不到的，然后会去这个构造函数的prototype中去查找，这个就找到了speak。
+	我们创建的p这个对象，它本身是没有speak这个方法的，但是当我们调用p.speak()的时候，程序会先去它本身（也就是Person这个构造函数）中去查找有没有speak这个方法，这个时候是找不到的，然后会去这个构造函数的prototype中去查找，这个就找到了speak。
