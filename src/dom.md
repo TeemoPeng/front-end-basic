@@ -1,2 +1,3 @@
 ## DOM
-整理中，敬请期待。。。
+
+DOM，即文档对象模型 Document Object Model 简称，

@@ -10,3 +10,4 @@
 4. [异步及单线程](https://github.com/TeemoPeng/front-end-basic/blob/master/src/async.md)
 5. [DOM](https://github.com/TeemoPeng/front-end-basic/blob/master/src/dom.md)
 6. [事件](https://github.com/TeemoPeng/front-end-basic/blob/master/src/event.md)
+7. [深浅拷贝](https://github.com/TeemoPeng/front-end-basic/blob/master/src/deep-copy.md)
