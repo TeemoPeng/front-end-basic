@@ -40,22 +40,20 @@
 
 ```javascript
 const shallowCopy = (source) => {
-	if (typeof source === 'object' && source !== null) {
-		const cloneTarget = Array.isArray(source) ? [] : {}
-		for (let p in source) {
-			if (source.hasOwnProperty(p)){
-				cloneTarget[p] = source[p]
-			}
-		}
-		return cloneTarget
-	} else {
-		return source
-	}
+  if (typeof source === 'object' && source !== null) {
+  const cloneTarget = Array.isArray(source) ? [] : {}
+  for (let p in source) {
+   if (source.hasOwnProperty(p)){
+     cloneTarget[p] = source[p]
+   }
+  }
+  return cloneTarget
+  } else {
+   return source
+  }
 }
 ```
 
 从上面这段代码可以看出，利用类型判断，针对引用类型的对象进行 for 循环遍历对象属性赋值给目标对象的属性，基本就可以手工实现一个浅拷贝的代码了
-
-
 
 #### 深拷贝的实现方式
