@@ -1,4 +1,4 @@
-### 继承概念的探究
+### P继承概念的探究
 
 说到继承的概念，首先要说一个经典的例子。
 
@@ -35,16 +35,44 @@
    let s1 = new Child()
    let s2 = new Child()
    s1.play.push(4)
-   console.log(s1.play, s2.play)
+   console.log(s1.play, s2.play) // [1,2,3,4] [1,2,3,4]
    ```
 
-   
+   创建的2个实例对象s1，s2，用的是同一个原型对象，它们的内存空间是共享的，当其中一个发生变化，另一个也随之变化，这就是原型链继承方式的一个缺点。
 
 2. #### 构造函数继承（借助 call）
 
+   ```javascript
+   function Parent1() {
+     this.name = 'parent1'
+   }
+   
+   Parent.prototype.getName = () => return this.name
+   
+   function Child1() {
+     Parent1.call(this)
+     this.type = 'child1'
+     this.play = [1,2,3,4]
+   }
+   
+   let child1 = new Child1()
+   let child2 = new Child1()
+   
+   console.log(child1)
+   console.log(child1.getName) // child1.getName is not a function
+   
+   child1.play.push(4) 
+   console.log(child2.play) // [1,2,3,4]
+   
+   ```
+
+   这种方式解决了原型链继承方式中两个实例共享内存的问题，但是随之也带来了另外一个问题：
+
+   只能继承父类的属性和方法，不能继承父类的原型属性和方法。
+
    
 
-3. #### 组合继承（前两种组合）
+3. #### 组合继承（原型链 + 构造函数组合）
 
    
 
