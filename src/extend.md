@@ -1,4 +1,4 @@
-### P继承概念的探究
+### 继承概念的探究
 
 说到继承的概念，首先要说一个经典的例子。
 
@@ -47,7 +47,7 @@
      this.name = 'parent1'
    }
    
-   Parent.prototype.getName = () => return this.name
+   Parent1.prototype.getName = () => return this.name
    
    function Child1() {
      Parent1.call(this)
@@ -61,7 +61,8 @@
    console.log(child1)
    console.log(child1.getName) // child1.getName is not a function
    
-   child1.play.push(4) 
+   child1.play.push(5) 
+   console.log(child1.play) // [1,2,3,4,5]
    console.log(child2.play) // [1,2,3,4]
    
    ```
