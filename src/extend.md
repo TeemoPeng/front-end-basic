@@ -8,9 +8,35 @@
 
 继承的基本概念就初步介绍这些，下面我们就来看看 JavaScript 中都有哪些实现继承的方法。
 
+
+
 ### JS 实现继承的几种方式
 
 1. #### 原型链继承
+
+   ```javascript
+   function Parent() {
+     this.name = 'Parent'
+     this.play = [1, 2, 3]
+   }
+   
+   function Child() {
+     this.type = 'Child'
+   }
+   
+   Child.prototype = new Parent()
+   const child = new Child()
+   console.log(child, child.name, child.play) 
+   ```
+
+   上面的代码看似没有问题，虽然父类的方法和属性都能够访问，但其实有一个潜在的问题，我再举个例子来说明这个问题。
+
+   ```javascript
+   let s1 = new Child()
+   let s2 = new Child()
+   s1.play.push(4)
+   console.log(s1.play, s2.play)
+   ```
 
    
 

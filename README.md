@@ -12,3 +12,4 @@
 6. [事件](https://github.com/TeemoPeng/front-end-basic/blob/master/src/event.md)
 7. [函数防抖与函数节流](https://github.com/TeemoPeng/front-end-basic/blob/master/src/debounce.md)
 8. [深浅拷贝](https://github.com/TeemoPeng/front-end-basic/blob/master/src/deep-copy.md)
+9. [继承的方式](https://github.com/TeemoPeng/front-end-basic/blob/master/src/extend.md)
