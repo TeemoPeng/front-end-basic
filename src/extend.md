@@ -75,6 +75,38 @@
 
 3. #### 组合继承（原型链 + 构造函数组合）
 
+   ```javascript
+   function Parent3() {
+     this.name = 'parent3'
+     this.play = [1,2,3]
+   }
+   
+   Parent3.prototype.getName = function() {
+     return this.name
+   }
+   
+   function Child3() {
+     Parent3.call(this) //第二次调用Parent3
+     this.type = 'child3'
+   }
+   
+   Child3.prototype = new Parent3() //第一次调用Parent3
+   Child3.prototype.constructor = Child3
+   
+   let s3 = new Child3()
+   let s4 = new Child3()
+   
+   s3.play.push(4)
+   console.log(s3.play, s4.play) // [1,2,3,4],[1,2,3] 互不影响
+   console.log(s3.getName()) // 能访问到父类的原型属性及方法
+   ```
+
+   执行以上代码，原型链继承方式、构造函数继承方式中的问题都能得以解决。
+
+   **缺点：**
+
+   Parent3多调用了一次，第一次是在改变Child3的prototype的时候，第二次是通过call方法调用Parent3的时候，多执行了一次，就多进行了一次性能开销。
+
    
 
 4. #### 原型式继承

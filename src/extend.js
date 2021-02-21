@@ -26,7 +26,7 @@ function Parent1() {
     this.name = 'parent1'
 }
 
-Parent1.prototype.getName = () => {
+Parent1.prototype.getName = function() {
     return this.name
 }
 
@@ -39,6 +39,28 @@ function Child1() {
 let child = new Child1()
 let child2 = new Child1()
 child.play.push(4)
-console.log('child:', child)
-console.log(child.getName)
-console.log('child2:', child2)
+// console.log(child.getName)
+
+
+// 3.原型链+构造函数组合继承方式
+function Parent3() {
+    this.name = 'parent3'
+    this.play = [1,2,3,4]
+}
+
+Parent3.prototype.getName = function() { return this.name }
+
+function Child3() {
+    Parent3.call(this)
+    this.type = 'child3'
+}
+
+Child3.prototype = new Parent3()
+// 手动挂上构造器，指向自己的构造函数
+Child3.prototype.constructor = Child3
+
+let s3 = new Child3()
+let s4 = new Child3()
+
+s3.play.push(5)
+console.log(s3.play, s4.play, s3.getName())
