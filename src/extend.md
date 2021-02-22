@@ -109,9 +109,30 @@
 
    
 
-4. #### 原型式继承
+4. #### 原型式继承（Object.create）
 
+   原型式继承，主要用到Object.create方法，该方法接收两个参数，第一个参数为用作新对象原型的对象，第二个参数为定义新对象额外属性的对象（可选）。
+
+   ```javascript
+   let parent4 = {
+     name: 'parent4',
+     play: [1,2,3],
+     getName: function(){
+       return this.name
+     }
+   }
    
+   let child4 = Object.create(parent4)
+   child4.name = 'child4'
+   child4.play.push(4)
+   
+   let child5 = Object.create(parent4)
+   console.log(child4, child4.play, child5.play)
+   ```
+
+   **缺点**：
+
+   多个实例的引用类型属性指向相同的内存，存在篡改的可能。
 
 5. #### 寄生式继承
 
