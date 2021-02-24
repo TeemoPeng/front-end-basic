@@ -64,3 +64,17 @@ let s4 = new Child3()
 
 s3.play.push(5)
 console.log(s3.play, s4.play, s3.getName())
+
+// 4. Object.create继承方式
+let parent4 = {
+    name: 'parent4',
+    play: [1,2,3],
+    getName: function(){
+        return this.name
+    }
+}
+let child4 = Object.create(parent4)
+
+
+//  最优继承方式
+

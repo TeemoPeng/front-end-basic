@@ -138,8 +138,67 @@
 
 5. #### 寄生式继承
 
+   使用原型式继承可以获得一份目标对象的浅拷贝，然后利用这个浅拷贝的能力再进行增强，添加一些方法，这样的继承方式就叫做寄生式继承。
+
+   虽然其优缺点和原型式继承一样，但是对于普通对象的继承方式来说，寄生式继承相比于原型式继承，是在父类基础上添加了更多的方法。
+
+   ```javascript
+   let parent5 = {
+     name: 'parent5',
+     friends: ['p1', 'p2', 'p3'],
+     getName: function(){
+       return this.name
+     }
+   }
+   
+   function clone(origin) {
+     let clone = Object.create(origin)
+     clone.getFriends = function() {
+       return this.friends
+     }
+     return clone
+   }
+   ```
+
+   通过上面这段代码，我们可以看到 person5 是通过寄生式继承生成的实例，它不仅仅有 getName 的方法，而且它最后也拥有了 getFriends 的方法。
+
+   从最后的输出结果中可以看到，person5 通过 clone 的方法，增加了 getFriends 的方法，从而使 person5 这个普通对象在继承过程中又增加了一个方法，这样的继承方式就是寄生式继承。
+
+   
+
+   上面第三种组合继承方式中提到了一些弊端，即两次调用父类的构造函数造成浪费，下面要介绍的寄生组合继承就可以解决这个问题。
+
    
 
 6. #### 寄生组合式继承
+
+   结合第四种中提及的继承方式，解决普通对象的继承问题的 Object.create 方法，我们在前面这几种继承方式的优缺点基础上进行改造，得出了寄生组合式的继承方式，这也是所有继承方式里面相对最优的继承方式，代码如下。
+
+   ```javascript
+   function Parent6() {
+     this.name = 'parent6'
+   }
+   Parent6.prototype.getName = function() {
+     return this.name
+   }
+   function Child6() {
+     Parent.call(this)
+     this.type = 'child6'
+   }
+   
+   /**
+   	这一步不用Child6.prototype = Parent.prototype的原因是避免内存共享
+   	不用Child6.prototype = new Parent6()的原因是避免调用2次父类的构造方法（另一次是call),会存在一份多余的父类实例属性
+   	Object.create()是创建了父类原型的副本，与父类原型完全隔离
+   */
+   Child6.prototype = Object.create(Parent6.prototype)
+   Child6.prototype.say = function(){
+     console.log(this.type)
+   }
+   Child6.prototype.constructor = Child
+   
+   
+   
+   ```
 
    
