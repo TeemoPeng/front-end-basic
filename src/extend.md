@@ -182,7 +182,7 @@
      return this.name
    }
    function Child6() {
-     Parent.call(this)
+     Parent6.call(this)
      this.type = 'child6'
    }
    
@@ -195,8 +195,11 @@
    Child6.prototype.say = function(){
      console.log(this.type)
    }
-   Child6.prototype.constructor = Child
+   Child6.prototype.constructor = Child6
    
+
+   let child6 = new Child6()
+   console.log(child6.getName())
    
    
    ```
