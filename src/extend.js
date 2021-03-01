@@ -79,9 +79,10 @@ let child4 = Object.create(parent4)
 //  最优继承方式
 function Parent6() {
     this.name = 'parent6'
-    this.play = [1, 2, 3]
+    this.play = [1,2,3]
 }
-Parent6.prototype.getName = function() {
+
+Parent6.prototype.getName = function(){
     return this.name
 }
 
@@ -90,16 +91,3 @@ function Child6() {
     this.type = 'child6'
 }
 
-Child6.prototype = Object.create(Parent6.prototype)
-Child6.prototype.say = function() {
-    console.log('child6 name:', this.name)
-}
-Child6.prototype.constructor = Child6
-
-
-let child6 = new Child6()
-let child7 = new Child6()
-
-child6.play.push(4)
-console.log(child6.play, child7.play)
-console.log(child6.getName(), child6.say())
