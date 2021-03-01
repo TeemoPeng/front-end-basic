@@ -78,12 +78,20 @@ function newOpt(constructor) {
 
 function Person4() {
   this.name = 'person4'
+  return 'sb'
 }
 const p4 = newOpt(Person4)
 
 ```
 
 #### call, apply, bind原理介绍
+
+先来了解一下这三个方法的基本使用情况，call,apply,bind是挂在Function对象的三个方法，调用这三个方法的必须是函数。
+基本语法：
+```javascript
+
+```
+
 
 
 
