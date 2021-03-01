@@ -1,8 +1,7 @@
 /**
  * 深克隆
  */
-
-const isComplextDataType = obj => (typeof obj === 'object' || typeof obj === 'function') && (obj !== null)
+const isComplexDataType = obj => (typeof obj === 'object' || typeof obj === 'function') && (obj !== null)
 
 const deepClone = (obj, hash = new WeakMap()) => {
 
@@ -17,12 +16,11 @@ const deepClone = (obj, hash = new WeakMap()) => {
 
   hash.set(obj, cloneObj)
 
-  for (let key of Reflect.ownKeys(obj)) {
-    cloneObj[key] = (isComplextDataType(obj[key]) && typeof obj[key] !== 'function') ? deepClone(obj[key], hash) : obj[key]
+  for(let key of Reflect.ownKeys(obj)) {
+    cloneObj[key] = (isComplexDataType(obj[key]) && typeof obj[key] !== 'function') ? deepClone(obj[key], hash) : obj[key]
   }
 
   return cloneObj
-
 }
 
 
