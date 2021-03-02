@@ -77,7 +77,7 @@ func.bind(thisArg, param1, param2)
 而bind和call、apply的区别在于，bind虽然改变了this的指向，但是不马上执行，call、apply方法改变this的指向后会立即执行。
 
 这几个方法的原理基本解释清楚了，但是理解起来可能还稍微费劲，举个例子：
-A对象中有一个方法getName，B对象也想临时使用A对象的getName方法，那么这个时候，我们就不需要为B对象单独定义一个getName方法了，而是可以直接借用A对象的方法，即达到了目的，又节省重复定义，节约内存空间。
+A对象中有一个方法getName，B对象也想临时使用A对象的getName方法，那么这个时候，我们就不需要为B对象单独定义一个getName方法了，而是可以直接借用A对象的方法，既达到了目的，又节省重复定义，节约内存空间。
 代码示例：
 ```javascript
 const A = {
@@ -226,13 +226,14 @@ Child.prototype.constructor = Child
     apply方法的实现步骤与call的实现一致，只是参数形式不一样而已：
 
     ```javascript
-    Function.prototype.myApply = function(obj){
+    Function.prototype.myApply = function(obj) {
       let context = obj || window
-      context.fn = this 
+      context.fn = this
       let args = arguments[1] ? arguments[1] : []
       const result = context.fn(...args)
       delete context.fn
       return result
+
     }
     const Parent = {
       name: 'parent',
@@ -248,7 +249,7 @@ Child.prototype.constructor = Child
     ```
 
 4. #### bind的实现
-    bind与call、apply的区别在于函数没有立即执行，返回的结果是一个函数。
+    bind与call、apply的区别在于函数没有立即执行，返回的结果是一个函数，且返回的函数可以作为构造函数使用，故作为构造函数时应使this失效，但是传入的参数依然有效。
 
     ```javascript
     Function.prototype.myBind = function(obj) {
