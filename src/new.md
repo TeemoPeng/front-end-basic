@@ -330,7 +330,66 @@ Child.prototype.constructor = Child
 
     完成了前面步，接下来还有一个需要处理的，那就是bind的另外一个特点：
 
-    > 一个绑定函数也能使用new操作符创建对象：这种行为就像把原函数当成构造器。提供的 this 值被忽略，同时调用时的参数被提供给模拟函数。
+    > 一个绑定函数也能使用new操作符创建对象：这种行为就像把原函数当成构造器。提供的 this 值被忽略，同时调用时的参数被提供给模拟函数。	
+    
+    也就是说，当bind返回的函数作为构造函数的时候，bind时指定的this值会失效，但传入的参数依然有效。举个例子：
+    
+    ```javascript
+    const value = 2
+    const foo = {
+      value: 1
+    }
+    function bar(name, age){
+      this.habit = 'playing'
+      console.log(this.value)
+      console.log(name)
+      console.log(age)
+    }
+    bar.prototype.friend = 'Kevin'
+    const bindFoo = bar.bind(foo, 'Daniel')
+    const obj = new bindFoo('18')
+    // undefined
+    // Daniel
+    // 18
+    console.log(obj.habit) // playing
+    console.log(obj.friend) // Kevin
+    ```
+    
+    尽管在全局和foo中我们都声明了value，最后依然返回了undefined，说明绑定的this失效了。
+    
+    我们可以通过修改返回的函数原型来实现：
+    
+    ```javascript
+    Function.prototype.bind3 = function(obj){
+      if (typeof this !== 'function') {
+        throw new Error('this must be function')
+      }
+      const self = this
+      const args = Array.prototype.slice.call(arguments, 1)
 
+      const fBound =  function(){
+        const bindArgs = Array.prototype.slice.call(arguments)
+        return self.apply(this instanceof fBound ? this : obj, args.concat(bindArgs))
+      }
 
+      fBound.prototype = this.prototype
+      return fBound
+    }
 
+    const value = 2
+    const foo = {
+      value: 1
+    }
+    function bar(name, age){
+      this.habit = 'playing'
+      console.log(this.value)
+      console.log(name)
+      console.log(age)
+    }
+    bar.prototype.friend = 'Kevin'
+    const bindFoo = bar.bind(foo, 'Daniel')
+    const obj = new bindFoo('18') // this失效
+
+    ```
+    
+    
