@@ -252,9 +252,32 @@ Child.prototype.constructor = Child
     bind与call、apply的区别在于函数没有立即执行，返回的结果是一个函数，且返回的函数可以作为构造函数使用，故作为构造函数时应使this失效，但是传入的参数依然有效。
 
     ```javascript
-    Function.prototype.myBind = function(obj) {
-      
+    Function.prototype.myBind = function(obj, ...args) {
+      console.log('this:', this)
+      if(typeof this !== 'function'){
+        throw new Error('this must be function')
+      }
+      const self = this
+      let fBound = function(){
+        self.apply(this instanceof self ? this : obj, args.contact(Array.prototype.slice.call(arguments)))
+      }
+
+      if (this.prototype){
+        fBound.prototype = Object.create(this.prototype)
+      }
+
+      return fBound
     }
+    const A = {
+      name: 'A',
+      getName: function(){
+        return this.name
+      }
+    }
+    const B = {
+      name: 'B'
+    }
+    console.log(A.getName.myBind(B))
     ```
 
 
