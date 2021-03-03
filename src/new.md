@@ -293,13 +293,40 @@ Child.prototype.constructor = Child
     }
     const fn = A.getName.bind(B, 'test')
     fn('test2')
-    
+
     // name: B
     // msg1: test
     // msg2: test2
 
     ```
+    getName函数需要传入两个参数，可以在bind的时候传入第一个，然后在返回函数执行时再传入第二个。
 
+    ```javascript
+    Function.prototype.bind2 = function(obj){
+      const self = this
+      // 获取bind2函数从第二个到最后一个参数
+      const args = Array.prototype.slice.call(arguments, 1)
+      return function(){
+        //这里的arguments是bind2返回的函数执行时传入的参数
+        const bindArgs = Array.prototype.slice.call(arguments)
+        return self.apply(obj, args.concat(bindArgs))
+      }
+    }
+
+    const A = {
+      name: 'A',
+      getName: function(msg1, msg2){
+        console.log('name:', this.name)
+        console.log('msg1:', msg1)
+        console.log('msg2:', msg2)
+      }
+    }
+    const B = {
+      name: 'B'
+    }
+    const fn = A.getName.bind2(B, 'test')
+    fn('test2')
+    ```
 
 
 
