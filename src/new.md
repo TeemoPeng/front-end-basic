@@ -251,22 +251,17 @@ Child.prototype.constructor = Child
 4. #### bind的实现
     bind与call、apply的区别在于函数没有立即执行，返回的结果是一个函数，且返回的函数可以作为构造函数使用，故作为构造函数时应使this失效，但是传入的参数依然有效。
 
-    ```javascript
-    Function.prototype.myBind = function(obj, ...args) {
-      console.log('this:', this)
-      if(typeof this !== 'function'){
-        throw new Error('this must be function')
-      }
+    bind方法的特点：
+    1. 返回一个函数
+    2. 可以传入参数
+
+    **返回一个函数：**
+    ```javascript  
+    Function.prototype.myBind = function(obj){
       const self = this
-      let fBound = function(){
-        self.apply(this instanceof self ? this : obj, args.contact(Array.prototype.slice.call(arguments)))
+      return function(){
+        return self.apply(obj)
       }
-
-      if (this.prototype){
-        fBound.prototype = Object.create(this.prototype)
-      }
-
-      return fBound
     }
     const A = {
       name: 'A',
@@ -277,7 +272,32 @@ Child.prototype.constructor = Child
     const B = {
       name: 'B'
     }
-    console.log(A.getName.myBind(B))
+    console.log(A.getName.myBind(B)()) // B
+    ```
+    之所以 return self.apply(obj)，是考虑到绑定函数可能是有返回值的。
+
+    **可以传入参数**
+    在bind调用的时候，可以传入参数，在执行bind返回函数的时候依然可以传入参数：
+
+    ```javascript
+    const A = {
+      name: 'A',
+      getName: function(msg1, msg2){
+        console.log('name:', this.name)
+        console.log('msg1:', msg1)
+        console.log('msg2:', msg2)
+      }
+    }
+    const B = {
+      name: 'B'
+    }
+    const fn = A.getName.bind(B, 'test')
+    fn('test2')
+    
+    // name: B
+    // msg1: test
+    // msg2: test2
+
     ```
 
 
