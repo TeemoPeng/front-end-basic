@@ -402,6 +402,8 @@ Child.prototype.constructor = Child
       const args = Array.prototype.slice.call(arguments, 1)
       const fBound = function(){
         const bindArags = Array.prototype.slice.call(arguments)
+        // 当作为构造函数时，this指向实例，可以让实例获得绑定函数的值
+        // 当作为普通函数时，this指向绑定的obj
         return self.apply(this instanceof fBound ? this : obj, args.concat(bindArags))
       }
       if (this.prototpye) {
