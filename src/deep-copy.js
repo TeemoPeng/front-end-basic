@@ -1,25 +1,23 @@
-// 判断是否为复杂类型对象
 const isComplexDataType = obj => (typeof obj === 'object' || typeof obj === 'function') && (obj !== null)
 
 const deepClone = (obj, hash = new WeakMap()) => {
+  if (obj.constructor === Date) return new Date(obj)
+  if (obj.constructor === RegExp) return new RegExp
+  if (hash.has(obj)) return hash.get(obj)
 
-    if (obj.constructor === Date) return new Date(obj)
+  const allDesc = Object.getOwnPropertyDescriptors(obj)
+  let cloneObj = Object.create(Object.getPrototypeOf(obj), allDesc)
 
-    if (obj.constructor === RegExp) return new RegExp(obj)
+  hash.set(obj, cloneObj)
 
-    if (hash.has(obj)) return hash.get(obj)
-
-    let allDesc = Object.getOwnPropertyDescriptors(obj)
-    let cloneObj = Object.create(Object.getPrototypeOf(obj), allDesc)
-
-    hash.set(obj, cloneObj)
-
-    for (let key of Reflect.ownKeys(obj)) {
-        cloneObj[key] = (isComplexDataType(obj[key]) && typeof obj[key] !== 'function') ? deepClone(obj[key], hash) : obj[key] 
-    }
-
-    return cloneObj
+  for(let key of Reflect.ownKeys(obj)){
+    cloneObj[key] = (isComplexDataType(obj[key]) && typeof obj[key] !== 'function') ? deepClone(obj[key], hash) : obj[key]
+  }
+  return cloneObj
 }
+
+
+
 
 // 下面是验证代码
 let obj = {
