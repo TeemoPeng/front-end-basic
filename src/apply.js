@@ -18,4 +18,4 @@ const B = {
     name: 'B'
 }
 
-console.log(A.getName.myApply(B, ['hi', 'sb']))
+console.log(A.getName.myApply(B, ['hello', 'world']))
