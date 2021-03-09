@@ -60,3 +60,38 @@ function Promise(executor){
 }
 ```
 
+接下来实现Promise中的resolve，reject方法：
+
+```javascript
+function MyPromise(executor) {
+  const self = this
+  self.status = 'pending'
+  self.data = undefined
+  self.onResolvedCallback = []
+  self.onRejectedCallback = []
+
+  function resolve(value) {
+    if (self.status === 'pending') {
+      self.status = 'resolved'
+      self.data = value
+      for (let i = 0; i < self.onResolvedCallback.length; i++) {
+        self.onResolvedCallback[i](value)
+      }
+    }
+  }
+
+  function reject(reason) {
+    if (self.status === 'pending') {
+      self.status = 'rejected'
+      self.data = reason
+      for (let i = 0; i < self.onRejectedCallback.length; i++) {
+        self.onRejectedCallback[i](reason)
+      }
+    }
+  }
+
+  executor(resolve, reject)
+}
+```
+resolve和reject方法，主要是返回当前Promise的值value或是拒绝的原因reason，并且将Promise内部的状态status改为resolved或是rejected，并且这个状态不能再逆转。
+
