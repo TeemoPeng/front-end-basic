@@ -39,5 +39,23 @@
 
   then方法可以被一个Promise多次调用，且必须返回一个Promise对象。
 
+  ```javascript
+  const promise2 = promise1.then(onFullfilled, onRejected)
+  ```
+其中 promise1 执行了 then 的方法之后，返回的依旧是个 promise2，然后我们拿着 promise2 又可以执行 then 方法，而 promise2 是一个新的 Promise 对象，又可以继续进行 then 方法调用。
 
+#### 实现Promise
 
+1. 构造函数
+按照Promise/A+的规范，第一步就是实现构造函数，这一步的思路是：Promise函数接收一个executor函数，executor函数执行完同步或异步的操作后，调用它的两个参数resolve，rejecte。
+
+```javascript
+function Promise(executor){
+  const self = this
+  self.status = 'pending' // Promise当前的状态
+  self.data = undefined  // Promise的值
+  self.onResolveCallback = [] // Promise resolve时的回调函数集
+  self.onRejecteCallback = [] // Promise rejecte时的回调函数集
+  executor(resolve, rejecte) // 执行executor并传入相应的参数
+}
+```
