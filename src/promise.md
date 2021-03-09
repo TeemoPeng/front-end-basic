@@ -59,3 +59,4 @@ function Promise(executor){
   executor(resolve, rejecte) // 执行executor并传入相应的参数
 }
 ```
+
