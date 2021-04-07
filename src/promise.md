@@ -47,7 +47,7 @@
 #### 实现Promise
 
 1. 构造函数
-按照Promise/A+的规范，第一步就是实现构造函数，这一步的思路是：Promise函数接收一个executor函数，executor函数执行完同步或异步的操作后，调用它的两个参数resolve，rejecte。
+按照Promise/A+的规范，第一步就是实现构造函数( const p = new Promise() )，这一步的思路是：Promise函数接收一个executor函数，executor函数执行完同步或异步的操作后，调用它的两个参数resolve，rejecte。
 
 ```javascript
 function Promise(executor){
@@ -94,4 +94,47 @@ function MyPromise(executor) {
 }
 ```
 resolve和reject方法，主要是返回当前Promise的值value或是拒绝的原因reason，并且将Promise内部的状态status改为resolved或是rejected，并且这个状态不能再逆转。
+
+#### 实现then方法
+then 方法是Promise执行之后可以拿到value或reason的方法，并且then返回的是一个Promise，支持链式调用。
+
+```javascript
+function MyPromise(executor) {
+  const self = this
+  self.status = 'pending'
+  self.data = undefined
+  self.onResolvedCallback = []
+  self.onRejectedCallback = []
+
+  function resolve(value) {
+    if (self.status === 'pending') {
+      self.data = value
+      self.status = 'resolved'
+      for (let i = 0; i < self.onResolvedCallback.length; i++) {
+        self.onResolvedCallback[i](value)
+      }
+    }
+  }
+
+  function reject(reason) {
+    if (self.status === 'pending') {
+      self.data = reason
+      self.status = 'rejected'
+
+      for(let i = 0; i < self.onRejectedCallback.length; i++) {
+        self.onRejectedCallback[i](reason)
+      }
+    }
+  }
+
+  executor(resolve, reject)
+}
+
+// then 方法接收两个参数onFullfilled， onRejected
+MyPromise.prototype.then = function(onFullfilled, onRejected){
+  
+}
+```
+
+
 
