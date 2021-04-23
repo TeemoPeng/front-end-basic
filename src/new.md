@@ -389,7 +389,41 @@ Child.prototype.constructor = Child
     bar.prototype.friend = 'Kevin'
     const bindFoo = bar.bind(foo, 'Daniel')
     const obj = new bindFoo('18') // this失效
+    ```
+
+    在这个写法中，fBound.prototype = this.prototype 我们直接修改fBound.prototype的时候，也会修改绑定函数的prototype，所以，可以用Object.create()来改造一下：
+        
+    ```javascript
+    Function.prototype.bind5 = function(obj){
+      if (typeof this !== 'function') {
+        throw new Error('this must be function')
+      }
+      const self = this
+      const args = Array.prototype.slice.call(arguments, 1)
+      const fBound = function(){
+        const bindArags = Array.prototype.slice.call(arguments)
+        // 当作为构造函数时，this指向实例，可以让实例获得绑定函数的值
+        // 当作为普通函数时，this指向绑定的obj
+        return self.apply(this instanceof fBound ? this : obj, args.concat(bindArags))
+      }
+      if (this.prototpye) {
+        fBound.prototype = Object.create(this.prototype)
+      }
+      return fBound
+    }
+    const value = 2
+    const foo = {
+      value: 1
+    }
+    function bar(name, age){
+      this.habit = 'playing'
+      console.log(this.value)
+      console.log(name)
+      console.log(age)
+    }
+    bar.prototype.friend = 'Kevin'
+    const bindFoo = bar.bind5(foo, 'Daniel')
+    const obj = new bindFoo('18') // this失效
+
 
     ```
-    
-    
