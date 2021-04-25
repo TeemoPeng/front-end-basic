@@ -38,7 +38,7 @@
 
 强缓存由两个响应头来决定，Expires、Cache-Control
 
-- Expires :  Expires是http1.0提出的一个表示自愿过期时间的header，它描述的是一个绝对时间，由服务器返回，Expires受限于本地时间，如果修改了本地时间，可能会造成缓存失效
+- Expires :  Expires是http1.0提出的一个表示资源过期时间的header，它描述的是一个绝对时间，由服务器返回，Expires受限于本地时间，如果修改了本地时间，可能会造成缓存失效
 
 - Cache-Control：在http1.1版本中新增了Cache-Control，优先级高于Expires，表示的是相对时间，比如：
 
@@ -54,3 +54,18 @@
   在缓存有效期内命中缓存，浏览器会直接读取本地的缓存资源，当缓存过期后会与服务器进行协商。
 
 **协商缓存**
+
+​	满足以下三个条件之一时，浏览器在第二次请求时会与服务器进行协商缓存：
+
+1. 当第一次请求时服务器返回的响应头中没有Cache-Control和Expires时
+2. 当Cache-Control和Expires过期
+3. 当Cache-Control 设置为no-cache时
+
+   如果缓存和服务器端资源的最新版本是一致的，那么就无需再次下载该资源，服务器端会返回304 Not Modified 状态码，
+
+如果服务器发现浏览器中的缓存已经是旧版本了，那么服务器就会把最新的资源的完整内容返回给浏览器，状态码就是200 Ok。
+
+服务器判断缓存是否是最新的方法就是依靠HTTP的另外两组信息：
+
+**Last-Modified / If-Modified-Since**
+
