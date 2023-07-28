@@ -11,5 +11,15 @@
     <p>需要注意的是：一个BFC的范围包含其所有的子元素，但不包含子元素的下级元素。</p>
 
     <h1>BFC的触发条件</h1>
+    <p>1. 根元素, html；</p>
+    <p>2. 行内块级元素：display属性为inline-block，table-cell,table-caption的元素；</p>
+    <p>3. overflow属性值为auto或visible的元素；</p>
+    <p>4. 浮动元素，即float属性值不为none的元素；</p>
+    <p>5. 定位元素：positon属性值为fixed或是absolute的元素。</p>
+
+    <h1>BFC的作用</h1>
+    <p>1. 清除浮动；</p>
+    <p>2. 解决父元素高度塌陷问题；</p>
+    <p>3. 解决相邻元素外边距折叠问题。</p>
   </body>
 </html>
